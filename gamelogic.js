@@ -81,9 +81,47 @@ function isGameWon(word, guesses) {
 //   return letterNotGuessed === undefined; // if there is no letter not guessed, we won
 // }
 
+// FUNCTIE ISGAMELOST
+
+// Fouten tellen:
+// 7 fout (of meer?) -> return true.
+// Minder dan 7 fout -> return false.
+
+// Stappenplan
+// • Counter aanmaken -> start bij 0
+// • for loop over guesses, voor elke guess
+// • Zit deze guess (letter) in het woord word.includes(guess)
+// • if
+// • Als true (we doen niets)
+// • Als false -> counter met 1 verhogen
+// • Aan het eind van de functie een if statement maken
+// • if
+// • Count is 7 -> return true
+// • Count is minder dan 7 -> return false
+
 function isGameLost(word, guesses) {
-  // WRITE ME
+  let mistakeCount = 0;
+  for (let index = 0; index < guesses.length; index++) {
+    const guess = guesses[index];
+    const isGuessCorrect = word.includes(guess);
+    if (!isGuessCorrect) {
+      mistakeCount = mistakeCount + 1;
+    }
+  }
+
+  const MAX_MISTAKE_COUNT = 7;
+  if (mistakeCount >= MAX_MISTAKE_COUNT) {
+    return true;
+  } else {
+    return false;
+  }
 }
+
+// Korte versie
+// function isGameLost(word, guesses) {
+//   const MAX_MISTAKE_COUNT = 7;
+//   return countMistakes(word, guesses) >= MAX_MISTAKE_COUNT;
+// }
 
 module.exports = {
   displayWordSoFar: displayWordSoFar,
