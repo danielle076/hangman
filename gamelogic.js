@@ -56,7 +56,7 @@ function displayWordSoFar(word, guesses) {
 // • if in de loop
 // • Is guesses true -> we gaan door
 // • Is guesses false -> we stoppen: return false
-// • Zijn we aan het einde van de loop? Aan het einde van de functie return true
+// • Aan het einde van de loop? Aan het einde van de functie return true
 
 function isGameWon(word, guesses) {
   const lettersInWordArray = word.split("");
