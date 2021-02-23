@@ -123,8 +123,15 @@ function isGameLost(word, guesses) {
 //   return countMistakes(word, guesses) >= MAX_MISTAKE_COUNT;
 // }
 
+// FUNCTIE COUNTMISTAKES
+
+function countMistakes(word, guesses) {
+  return guesses.filter((guess) => !word.includes(guess)).length;
+}
+
 module.exports = {
   displayWordSoFar: displayWordSoFar,
   isGameWon: isGameWon,
   isGameLost: isGameLost,
+  countMistakes: countMistakes,
 };

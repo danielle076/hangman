@@ -1,15 +1,51 @@
-const { question } = require("readline-sync");
-const { displayWordSoFar, isGameWon, isGameLost } = require("./gamelogic");
+const { keyIn } = require("readline-sync");
+
+const {
+    displayWordSoFar,
+    isGameWon,
+    isGameLost,
+    countMistakes,
+} = require("./gamelogic");
+const drawGallows = require("./gallows");
 
 function game(word, guesses) {
     console.log("Dit heb je tot nu toe geraden: ", guesses);
+    const wordSoFar = displayWordSoFar(word, guesses);
+    console.log(`${wordSoFar}`);
 
-    const letter = question("Raad een letter: ");
+    // Using keyIn to get one letter, using limit to limit the options of the user, caseSensitive to only get lowercase letters.
+    // Check readline-sync docs for details.
+    const letter = keyIn("Raad een letter: ", {
+        limit: "abcdefghijklmnopqrstuvwxyz",
+        caseSensitive: true,
+    });
 
-    // voeg de geraden letter toe aan de array met guesses
-    guesses.push(letter);
+    if (!guesses.includes(letter)) {
+        // voeg de geraden letter toe aan de array met guesses
+        guesses.push(letter);
+    } else {
+        console.log("Die letter had je al geprobeerd ... ");
+    }
 
-    // volgende ronde! we roepen game nog een keer aan
+    const gameWon = isGameWon(word, guesses);
+    if (gameWon) {
+        console.log("YOU WON!");
+        // returning om de game functie te laten stoppen
+        return;
+    }
+
+    const mistakeCount = countMistakes(word, guesses);
+    console.log(`Je mag nog ${7 - mistakeCount} fouten maken`);
+    drawGallows(mistakeCount);
+
+    const gameLost = isGameLost(word, guesses);
+    if (gameLost) {
+        console.log("YOU HAVE DIED...");
+        // returning om de game functie te laten stoppen
+        return;
+    }
+
+    // Volgende ronde! we roepen game nog een keer aan.
     game(word, guesses);
 }
 
